@@ -40,8 +40,37 @@ public class Main {
             word.setNoOfSpamMails(noOfSpamMails);
         });
 
+        Mail mailToTestIfSpamOrHam = new MailRepository().getMail("src/main/resources/ham-test/ham-test-1.txt");
+        double probability = calculateNaiveBayesProbability(mailToTestIfSpamOrHam, allUniqueWordsWhichAppearedInAllMails, noOfHamMails, noOfSpamMails);
 
     }
+
+    private static double calculateNaiveBayesProbability(Mail mailToTestIfSpamOrHam, List<Word> allUniqueWordsWhichAppearedInAllMails, int noOfHamMails, int noOfSpamMails) {
+        double pSpam = 0.5; // Assuming equal probability for spam and ham
+        double pHam = 0.5;
+
+        double productPWordGivenSpam = 1.0;
+        double productPWordGivenHam = 1.0;
+
+        for (String word : mailToTestIfSpamOrHam.getWords()) {
+            Word wordStats = allUniqueWordsWhichAppearedInAllMails.stream()
+                    .filter(w -> w.getWord().equals(word))
+                    .findFirst()
+                    .orElse(new Word(word));
+
+            double pWordGivenSpam = (double) wordStats.getNoOfOccurencesInSpam() / noOfSpamMails;
+            double pWordGivenHam = (double) wordStats.getNoOfOccurencesInHam() / noOfHamMails;
+
+            productPWordGivenSpam *= pWordGivenSpam;
+            productPWordGivenHam *= pWordGivenHam;
+        }
+
+        double numerator = pSpam * productPWordGivenSpam;
+        double denominator = (pSpam * productPWordGivenSpam) + (pHam * productPWordGivenHam);
+
+        return numerator / denominator;
+    }
+
 
     public static int getNoOfOccurencesInMails(List<Mail> mails, Word word){
         return (int) mails.stream().filter(mail -> mail.getWords().contains(word.getWord())).count();

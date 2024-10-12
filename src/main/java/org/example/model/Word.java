@@ -14,6 +14,14 @@ public class Word {
         this.word = word;
     }
 
+    public int getNoOfOccurencesInSpam() {
+        return noOfOccurencesInSpam;
+    }
+
+    public int getNoOfOccurencesInHam() {
+        return noOfOccurencesInHam;
+    }
+
     public String getWord() {
         return word;
     }
@@ -45,4 +53,5 @@ public class Word {
     public double getBayesSpam(){
         return getSpamRatio() / (getSpamRatio() + getHamRatio());
     }
+
 }
