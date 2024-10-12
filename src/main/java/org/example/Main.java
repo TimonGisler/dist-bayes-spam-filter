@@ -58,11 +58,8 @@ public class Main {
                     .findFirst()
                     .orElse(new Word(word));
 
-            double pWordGivenSpam = (double) wordStats.getNoOfOccurencesInSpam() / noOfSpamMails;
-            double pWordGivenHam = (double) wordStats.getNoOfOccurencesInHam() / noOfHamMails;
-
-            productPWordGivenSpam *= pWordGivenSpam;
-            productPWordGivenHam *= pWordGivenHam;
+            productPWordGivenSpam *= wordStats.getSpamRatio();
+            productPWordGivenHam *= wordStats.getHamRatio();
         }
 
         double numerator = pSpam * productPWordGivenSpam;
