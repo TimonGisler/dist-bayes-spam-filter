@@ -3,8 +3,12 @@ package org.example.model;
 public class Word {
     private String word;
 
+
     private int noOfOccurencesInSpam;
+    private int noOfSpamMails;
+
     private int noOfOccurencesInHam;
+    private int noOfHamMails;
 
     public Word(String word) {
         this.word = word;
@@ -14,12 +18,12 @@ public class Word {
         return word;
     }
 
-    public void increaseSpamCount() {
-        noOfOccurencesInSpam++;
+    public void setNoOfSpamMails(int noOfSpamMails) {
+        this.noOfSpamMails = noOfSpamMails;
     }
 
-    public void increaseHamCount() {
-        noOfOccurencesInHam++;
+    public void setNoOfHamMails(int noOfHamMails) {
+        this.noOfHamMails = noOfHamMails;
     }
 
     public void setNoOfOccurencesInHam(int noOfOccurencesInMails) {
@@ -28,5 +32,13 @@ public class Word {
 
     public void setNoOfOccurencesInSpam(int noOfOccurencesInMails) {
         this.noOfOccurencesInSpam = noOfOccurencesInMails;
+    }
+
+    public double getSpamRatio(){
+        return this.noOfOccurencesInSpam /(double) this.noOfSpamMails;
+    }
+
+    public double getHamRatio(){
+        return this.noOfOccurencesInHam /(double) this.noOfHamMails;
     }
 }
