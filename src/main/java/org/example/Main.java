@@ -20,6 +20,10 @@ public class Main {
         List<Mail> allMails =  Stream.concat(hamMails.stream(), spamMails.stream()).toList();
         List<Word> allUniqueWordsWhichAppearedInAllMails = allMails.stream().flatMap(mail -> mail.getWords().stream()).collect(Collectors.toSet()).stream().map(Word::new).toList();
 
+        // TODO TGS, for testing now, remove later
+        // only take the first 1k of all the words, because it takes too long to calculate the probabilities for all words
+        allUniqueWordsWhichAppearedInAllMails = allUniqueWordsWhichAppearedInAllMails.subList(0, 1000);
+
         // count how often each word appears in ham and spam mails
         AtomicInteger i = new AtomicInteger(0);
         allUniqueWordsWhichAppearedInAllMails.parallelStream().forEach(word -> {

@@ -41,4 +41,8 @@ public class Word {
     public double getHamRatio(){
         return this.noOfOccurencesInHam /(double) this.noOfHamMails;
     }
+
+    public double getBayesSpam(){
+        return getSpamRatio() / (getSpamRatio() + getHamRatio());
+    }
 }
