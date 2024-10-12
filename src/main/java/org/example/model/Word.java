@@ -21,4 +21,12 @@ public class Word {
     public void increaseHamCount() {
         noOfOccurencesInHam++;
     }
+
+    public void setNoOfOccurencesInHam(int noOfOccurencesInMails) {
+        this.noOfOccurencesInHam = noOfOccurencesInMails;
+    }
+
+    public void setNoOfOccurencesInSpam(int noOfOccurencesInMails) {
+        this.noOfOccurencesInSpam = noOfOccurencesInMails;
+    }
 }

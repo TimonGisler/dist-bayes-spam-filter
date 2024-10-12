@@ -20,9 +20,13 @@ public class Main {
         List<Word> allWords = allMails.stream().flatMap(mail -> mail.getWords().stream()).collect(Collectors.toSet()).stream().map(Word::new).toList();
 
         // count how often each word appears in ham and spam mails
-        hamMails.forEach(mail -> mail.getWords().forEach(word -> allWords.stream().filter(w -> w.getWord().equals(word)).findFirst().ifPresent(Word::increaseHamCount)));
-        spamMails.forEach(mail -> mail.getWords().forEach(word -> allWords.stream().filter(w -> w.getWord().equals(word)).findFirst().ifPresent(Word::increaseSpamCount)));
+        allWords.forEach(word -> {
+            word.setNoOfOccurencesInHam(getNoOfOccurencesInMails(hamMails, word));
+            word.setNoOfOccurencesInSpam(getNoOfOccurencesInMails(spamMails, word));
+        });
+    }
 
-
+    public static int getNoOfOccurencesInMails(List<Mail> mails, Word word){
+        return (int) mails.stream().filter(mail -> mail.getWords().contains(word.getWord())).count();
     }
 }
