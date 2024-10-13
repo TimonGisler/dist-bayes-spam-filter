@@ -3,22 +3,33 @@ package org.example.model;
 public class Word {
     private String word;
 
+    private static final double alpha = 0.0000001;
 
-    private int noOfOccurencesInSpam;
+    private double noOfOccurencesInSpam;
     private int noOfSpamMails;
 
-    private int noOfOccurencesInHam;
+    private double noOfOccurencesInHam;
     private int noOfHamMails;
 
     public Word(String word) {
         this.word = word;
     }
 
-    public int getNoOfOccurencesInSpam() {
+    public double getNoOfOccurencesInSpam() {
+        //alpha if word is not in spam mails
+        if (noOfOccurencesInSpam == 0) {
+            return alpha;
+        }
+
         return noOfOccurencesInSpam;
     }
 
-    public int getNoOfOccurencesInHam() {
+    public double getNoOfOccurencesInHam() {
+        // alpha if word is not in ham mails
+        if (noOfOccurencesInHam == 0) {
+            return alpha;
+        }
+
         return noOfOccurencesInHam;
     }
 
@@ -43,11 +54,11 @@ public class Word {
     }
 
     public double getSpamRatio(){
-        return this.noOfOccurencesInSpam /(double) this.noOfSpamMails;
+        return this.getNoOfOccurencesInSpam() /(double) this.noOfSpamMails;
     }
 
     public double getHamRatio(){
-        return this.noOfOccurencesInHam /(double) this.noOfHamMails;
+        return this.getNoOfOccurencesInHam() /(double) this.noOfHamMails;
     }
 
     public double getBayesSpam(){
