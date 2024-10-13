@@ -38,6 +38,10 @@ public class Word {
     }
 
     public void setNoOfSpamMails(int noOfSpamMails) {
+        if (noOfSpamMails == 0) {
+            System.out.println("NO SPAM MAILS SHOULD NEVER BE POSSIBLE!!!!!!");
+        }
+
         this.noOfSpamMails = noOfSpamMails;
     }
 
@@ -53,15 +57,15 @@ public class Word {
         this.noOfOccurencesInSpam = noOfOccurencesInMails;
     }
 
-    public double getSpamRatio(){
-        return this.getNoOfOccurencesInSpam() /(double) this.noOfSpamMails;
+    public double getSpamRatio() {
+        return this.getNoOfOccurencesInSpam() / (double) this.noOfSpamMails;
     }
 
-    public double getHamRatio(){
-        return this.getNoOfOccurencesInHam() /(double) this.noOfHamMails;
+    public double getHamRatio() {
+        return this.getNoOfOccurencesInHam() / (double) this.noOfHamMails;
     }
 
-    public double getBayesSpam(){
+    public double getBayesSpam() {
         return getSpamRatio() / (getSpamRatio() + getHamRatio());
     }
 
