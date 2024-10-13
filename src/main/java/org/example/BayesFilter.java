@@ -80,6 +80,7 @@ public class BayesFilter {
 
 
     public static int getNoOfOccurencesInMails(List<Mail> mails, Word word){
-        return (int) mails.stream().filter(mail -> mail.getWords().contains(word.getWord())).count();
+        List<Mail> mailsContainingWord = mails.stream().filter(mail -> mail.getWords().contains(word.getWord())).toList();
+        return mailsContainingWord.size();
     }
 }

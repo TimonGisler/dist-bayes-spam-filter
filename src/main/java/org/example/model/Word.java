@@ -3,7 +3,7 @@ package org.example.model;
 public class Word {
     private String word;
 
-    private static final double alpha = 0.0000001;
+    private static final double alpha = 0.1;
 
     private double noOfOccurencesInSpam;
     private int noOfSpamMails;
