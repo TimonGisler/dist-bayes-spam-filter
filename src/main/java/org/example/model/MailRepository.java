@@ -61,9 +61,8 @@ public class MailRepository {
     }
 
     public Mail getMail(String path) throws IOException {
-        return new Mail("who knows if spam or ham : D");
-//        String content = new String(Files.readAllBytes(Paths.get(path)));
-//        return new Mail(content);
+        String content = new String(Files.readAllBytes(Paths.get(path)));
+        return new Mail(content);
     }
 
 
