@@ -66,4 +66,36 @@ public class MailRepository {
     }
 
 
+    public List<String> getAllHamKallibrierungMails() {
+        String pathToHamKallibrierung = reosurcePath + "ham-kallibrierung";
+
+        File folder = new File(pathToHamKallibrierung);
+        File[] listOfFiles = folder.listFiles();
+
+        // convert to list of uris
+        List<String> uris = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                file.getName();
+                uris.add(file.getAbsoluteFile().getAbsolutePath());
+            }
+        }
+        return uris;
+    }
+
+    public List<String> getAllSpamKallibrierungMails() {
+        String pathToSpamKallibrierung = reosurcePath + "spam-kallibrierung";
+
+        File folder = new File(pathToSpamKallibrierung);
+        File[] listOfFiles = folder.listFiles();
+
+        // convert to list of uris
+        List<String> uris = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                uris.add(file.toURI().toString());
+            }
+        }
+        return uris;
+    }
 }
