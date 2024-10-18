@@ -15,6 +15,10 @@ public class Word {
         this.word = word;
     }
 
+    public int getNoOfSpamMails() {
+        return noOfSpamMails;
+    }
+
     public double getNoOfOccurencesInSpam() {
         //alpha if word is not in spam mails
         if (noOfOccurencesInSpam == 0) {

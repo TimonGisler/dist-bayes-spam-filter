@@ -41,7 +41,11 @@ public class BayesFilter {
             Word wordStats = allUniqueWordsWhichAppearedInAllMails.stream()
                     .filter(w -> w.getWord().equals(word))
                     .findFirst()
-                    .orElse(new Word(word));
+                    .orElse(null);
+
+            if (wordStats == null) {
+                return 0.5; // If the word is not in the training set, return 0.5, i have no idea if it is spam or ham
+            }
 
             productPWordGivenSpam = productPWordGivenSpam.multiply(new BigDecimal(Double.toString(wordStats.getSpamRatio())));
             productPWordGivenHam = productPWordGivenHam.multiply(new BigDecimal(Double.toString(wordStats.getHamRatio())));
