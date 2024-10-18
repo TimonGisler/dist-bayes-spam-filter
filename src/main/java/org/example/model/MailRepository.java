@@ -61,6 +61,13 @@ public class MailRepository {
     }
 
     public Mail getMail(String path) throws IOException {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(path)));
+            return new Mail(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String content = new String(Files.readAllBytes(Paths.get(path)));
         return new Mail(content);
     }
@@ -93,7 +100,8 @@ public class MailRepository {
         List<String> uris = new ArrayList<>();
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                uris.add(file.toURI().toString());
+                file.getName();
+                uris.add(file.getAbsoluteFile().getAbsolutePath());
             }
         }
         return uris;

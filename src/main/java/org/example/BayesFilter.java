@@ -44,7 +44,7 @@ public class BayesFilter {
                     .orElse(null);
 
             if (wordStats == null) {
-                return 0.5; // If the word is not in the training set, return 0.5, i have no idea if it is spam or ham
+                continue; // Word not found in training data, skip it
             }
 
             productPWordGivenSpam = productPWordGivenSpam.multiply(new BigDecimal(Double.toString(wordStats.getSpamRatio())));

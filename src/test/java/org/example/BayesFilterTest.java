@@ -52,12 +52,32 @@ class BayesFilterTest {
                 System.out.println("Error while classifying mail: " + hamMailUri);
                 spamProbability = new BayesFilter(wordList).isSpam(hamMailUri);
             }
-            if (spamProbability < 0.5) {
+
+            double schwellenWert = 0.5;
+            if (spamProbability < schwellenWert) {
                 noOfCorrectlyClassifiedHamMails++;
             }
         }
 
-        System.out.println("Ham mails: " + hamMailsUri.size());
+        // count how many spam mails are correctly classified as spam
+        int noOfCorrectlyClassifiedSpamMails = 0;
+        for (String spamMailUri : spamMailsUri) {
+            double spamProbability = 0;
+            try {
+                spamProbability = new BayesFilter(wordList).isSpam(spamMailUri);
+            } catch (Exception e) {
+                System.out.println("Error while classifying mail: " + spamMailUri);
+                spamProbability = new BayesFilter(wordList).isSpam(spamMailUri);
+            }
+
+            double schwellenWert = 0.5;
+            if (spamProbability >= schwellenWert) {
+                noOfCorrectlyClassifiedSpamMails++;
+            }
+        }
+
+        System.out.println("Ham mails: " + hamMailsUri.size() + " correctly classified: " + noOfCorrectlyClassifiedHamMails);
+        System.out.println("Spam mails: " + spamMailsUri.size() + " correctly classified: " + noOfCorrectlyClassifiedSpamMails);
     }
 
 }
