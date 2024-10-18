@@ -106,4 +106,37 @@ public class MailRepository {
         }
         return uris;
     }
+
+    public List<String> getAllHamTestMails() {
+        String pathToHamTest = reosurcePath + "ham-test";
+
+        File folder = new File(pathToHamTest);
+        File[] listOfFiles = folder.listFiles();
+
+        // convert to list of uris
+        List<String> uris = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                uris.add(file.getAbsoluteFile().getAbsolutePath());
+            }
+        }
+        return uris;
+    }
+
+    public List<String> getAllSpamTestMails() {
+        String pathToSpamTest = reosurcePath + "spam-test";
+
+        File folder = new File(pathToSpamTest);
+        File[] listOfFiles = folder.listFiles();
+
+        // convert to list of uris
+        List<String> uris = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                uris.add(file.getAbsoluteFile().getAbsolutePath());
+            }
+        }
+        return uris;
+
+    }
 }

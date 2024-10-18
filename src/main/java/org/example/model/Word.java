@@ -3,7 +3,7 @@ package org.example.model;
 public class Word {
     private String word;
 
-    private static final double alpha = 0.1;
+    public static final double alpha = 0.1;
 
     private double noOfOccurencesInSpam;
     private int noOfSpamMails;
@@ -18,6 +18,7 @@ public class Word {
     public int getNoOfSpamMails() {
         return noOfSpamMails;
     }
+
 
     public double getNoOfOccurencesInSpam() {
         //alpha if word is not in spam mails

@@ -59,6 +59,87 @@ public class BayesFilter {
         return result.doubleValue(); // Convert BigDecimal to double
     }
 
+    public double findOptimalThreshold() throws IOException {
+        List<Word> wordList = BayesTrainer.train(null);
+
+        List<String> hamMailsUri = new MailRepository().getAllHamKallibrierungMails();
+        List<String> spamMailsUri = new MailRepository().getAllSpamKallibrierungMails();
+
+        double bestThreshold = 0;
+        double bestAccuracy = 0;
+
+        // Calculate spam probabilities for all mails once
+        List<Double> hamProbabilities = new ArrayList<>();
+        List<Double> spamProbabilities = new ArrayList<>();
+
+        for (String hamMailUri : hamMailsUri) {
+            try {
+                hamProbabilities.add(new BayesFilter(wordList).isSpam(hamMailUri));
+            } catch (Exception e) {
+                System.out.println("Error while classifying ham mail: " + hamMailUri);
+            }
+        }
+
+        for (String spamMailUri : spamMailsUri) {
+            try {
+                spamProbabilities.add(new BayesFilter(wordList).isSpam(spamMailUri));
+            } catch (Exception e) {
+                System.out.println("Error while classifying spam mail: " + spamMailUri);
+            }
+        }
+
+        // Iterate through possible threshold values
+        for (double threshold = 0; threshold <= 1; threshold += 0.01) {
+            int correctlyClassifiedHam = 0;
+            int correctlyClassifiedSpam = 0;
+
+            for (double probability : hamProbabilities) {
+                if (probability < threshold) {
+                    correctlyClassifiedHam++;
+                }
+            }
+
+            for (double probability : spamProbabilities) {
+                if (probability >= threshold) {
+                    correctlyClassifiedSpam++;
+                }
+            }
+
+            double accuracy = (double) (correctlyClassifiedHam + correctlyClassifiedSpam) /
+                    (hamProbabilities.size() + spamProbabilities.size());
+
+            if (accuracy > bestAccuracy) {
+                bestAccuracy = accuracy;
+                bestThreshold = threshold;
+            }
+        }
+
+        System.out.printf("Best threshold: %.2f%n", bestThreshold);
+        System.out.printf("Best accuracy: %.2f%%%n", bestAccuracy * 100);
+
+        // Print results for the best threshold
+        int finalCorrectHam = 0;
+        int finalCorrectSpam = 0;
+
+        for (double probability : hamProbabilities) {
+            if (probability < bestThreshold) {
+                finalCorrectHam++;
+            }
+        }
+
+        for (double probability : spamProbabilities) {
+            if (probability >= bestThreshold) {
+                finalCorrectSpam++;
+            }
+        }
+
+        System.out.println("Ham mails: " + hamProbabilities.size() +
+                " correctly classified: " + finalCorrectHam);
+        System.out.println("Spam mails: " + spamProbabilities.size() +
+                " correctly classified: " + finalCorrectSpam);
+
+        return bestThreshold;
+    }
 
 
 }
