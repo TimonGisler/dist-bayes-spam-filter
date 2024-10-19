@@ -5,7 +5,6 @@ import org.example.model.MailRepository;
 import org.example.model.Word;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -26,14 +25,14 @@ public class BayesTrainer {
         List<Mail> allMails =  Stream.concat(hamMails.stream(), spamMails.stream()).toList();
         List<Word> allUniqueWordsWhichAppearedInAllMails = allMails.stream().flatMap(mail -> mail.getWords().stream()).collect(Collectors.toSet()).stream().map(Word::new).toList();
 
-        // TODO TGS, for testing now, remove later
-        // only take the first 1k of all the words, because it takes too long to calculate the probabilities for all words
-        allUniqueWordsWhichAppearedInAllMails = new ArrayList<>(allUniqueWordsWhichAppearedInAllMails.subList(0, 1000));
-        if (pathToMailToTest != null) {
-            Mail mailToTest = new MailRepository().getMail(pathToMailToTest);
-            allUniqueWordsWhichAppearedInAllMails.addAll(mailToTest.getWords().stream().map(Word::new).toList());
-        }
-        // TODO TGS, end of which should be removed later
+//        // TODO TGS, for testing now, remove later
+//        // only take the first 1k of all the words, because it takes too long to calculate the probabilities for all words
+//        allUniqueWordsWhichAppearedInAllMails = new ArrayList<>(allUniqueWordsWhichAppearedInAllMails.subList(0, 1000));
+//        if (pathToMailToTest != null) {
+//            Mail mailToTest = new MailRepository().getMail(pathToMailToTest);
+//            allUniqueWordsWhichAppearedInAllMails.addAll(mailToTest.getWords().stream().map(Word::new).toList());
+//        }
+//        // TODO TGS, end of which should be removed later
 
         // count how often each word appears in ham and spam mails
         AtomicInteger i = new AtomicInteger(0);
